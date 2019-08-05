@@ -1,8 +1,18 @@
-﻿using Android.App;
+﻿using System;
+
+using Android.App;
 using Android.OS;
 using Android.Support.V7.App;
 using Android.Runtime;
 using Android.Widget;
+using Android.Content.PM;
+
+using Android.App;
+using Android.Content.PM;
+using Android.Runtime;
+using Android.Views;
+using Android.Widget;
+using Android.OS;
 
 namespace XamarinAppExpleShop.UIClassic.Android
 {
