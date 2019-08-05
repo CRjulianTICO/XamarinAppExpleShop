@@ -41,6 +41,7 @@ namespace XamarinAppExpleShop.Web.Data.Entities
 
 
         [Display(Name = "Last Purchase")]
+        
         public DateTime? LastPurchase
         {
             get;
