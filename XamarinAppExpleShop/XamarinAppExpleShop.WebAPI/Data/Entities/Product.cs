@@ -8,7 +8,7 @@ namespace XamarinAppExpleShop.Web.Data.Entities
     using System.Linq;
     using System.Threading.Tasks;
     using System.ComponentModel.DataAnnotations;
-    public class Product
+    public class Product: IEntity
     {
         public int Id
         {

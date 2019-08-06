@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using XamarinAppExpleShop.Web.Data;
 using XamarinAppExpleShop.Web.Data.Entities;
+using XamarinAppExpleShop.Web.Helpers;
 
 namespace XamarinAppExpleShop.WebAPI
 {
@@ -29,7 +30,7 @@ namespace XamarinAppExpleShop.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-
+            /*se agreggo*/
             services.AddIdentity<User, IdentityRole>(cfg =>
             {
                 cfg.User.RequireUniqueEmail = true;
@@ -57,7 +58,7 @@ namespace XamarinAppExpleShop.WebAPI
 
 
 
-
+            /*se agreggo*/
             services.AddTransient<SeedDb>();
 
 
@@ -65,11 +66,21 @@ namespace XamarinAppExpleShop.WebAPI
 
 
 
+            /*se agreggo*/
+            services.AddScoped<IProductRepository, ProductRepository>();
 
-            services.AddScoped<IRepository, Repository>();
 
 
 
+            /*se agreggo*/
+            services.AddScoped<ICountryRepository, CountryRepository>();
+
+
+
+
+
+            /*se agreggo*/
+            services.AddScoped<IUserHelper, UserHelper>();
 
 
 
@@ -103,8 +114,10 @@ namespace XamarinAppExpleShop.WebAPI
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-
+            /*se agrego*/
             app.UseAuthentication();
+
+
 
 
             app.UseCookiePolicy();

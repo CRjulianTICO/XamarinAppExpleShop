@@ -7,18 +7,21 @@ namespace XamarinAppExpleShop.Web.Data
     using System.Linq;
     using System.Threading.Tasks;
     using XamarinAppExpleShop.Web.Data.Entities;
+    using XamarinAppExpleShop.Web.Helpers;
 
     public class SeedDb
     {
 
-        private readonly UserManager<User> userManager;
+        //private readonly UserManager<User> userManager;
         private readonly DataContext context;
         private Random random;
+        private readonly IUserHelper userHelper;
 
-        public SeedDb(DataContext context, UserManager<User> userManager)
+        public SeedDb(DataContext context, UserManager<User> userManager, IUserHelper userHelper)
         {
             this.context = context;
             this.random = new Random();
+            this.userHelper = userHelper;
         }
 
         public async Task SeedAsync()
@@ -26,7 +29,7 @@ namespace XamarinAppExpleShop.Web.Data
             await this.context.Database.EnsureCreatedAsync();
 
 
-            var user = await this.userManager.FindByEmailAsync("jzuluaga55@gmail.com");
+            var user = await this.userHelper.GetUserByEmailAsync("jzuluaga55@gmail.com");
             if (user == null)
             {
                 user = new User
@@ -38,7 +41,7 @@ namespace XamarinAppExpleShop.Web.Data
                     PhoneNumber = "35025652981"
                 };
 
-                var result = await this.userManager.CreateAsync(user, "123456");
+                var result = await this.userHelper.AddUserAsync(user, "123456");
 
                 if (result != IdentityResult.Success)
                 {
