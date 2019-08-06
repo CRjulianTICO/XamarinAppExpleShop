@@ -2,6 +2,7 @@
 
 namespace XamarinAppExpleShop.Web.Data
 {
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
@@ -9,8 +10,10 @@ namespace XamarinAppExpleShop.Web.Data
     using System.Threading.Tasks;
     using XamarinAppExpleShop.Web.Data.Entities;
 
-    public class DataContext:DbContext
+    public class DataContext : IdentityDbContext<User>
     {
+
+
 
         public DbSet<Product> Products { get; set; }
 

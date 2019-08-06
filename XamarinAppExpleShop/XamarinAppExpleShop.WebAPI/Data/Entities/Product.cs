@@ -73,6 +73,7 @@ namespace XamarinAppExpleShop.Web.Data.Entities
         }
 
 
+        public User User { get; set; }
 
     }
 }
