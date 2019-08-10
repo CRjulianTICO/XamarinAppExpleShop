@@ -56,6 +56,7 @@ namespace XamarinAppExpleShop.Web.Data
                 this.AddProduct("iPhone X", user);
                 this.AddProduct("Magic Mouse", user);
                 this.AddProduct("iWatch Series 4", user);
+                this.AddProduct("iPad Air 2", user);
                 await this.context.SaveChangesAsync();
             }
         }
