@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             
+             
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             
+             x:Class="XamarinAppExpleShop.UIForms.Views.LoginPage">
+    
+    <!--Para bindiar es el bindingcontext static resource es el diccionario de recursos en app.xaml-->
+    
+    <ContentPage.Content>
+
+        <!--Scroll view es un contenedor, tambien el stacklaout, 
+        pero el principal es Scrollview -->
+        <ScrollView BindingContext="{Binding Login}">
+            <StackLayout
+                Padding="8">
+                
+                <Label
+                    Text="Email:">
+                </Label>
+                <Entry
+                    Keyboard="Email"
+                    Placeholder="correo@elctronico.com"
+                    Text="{Binding Email}">
+                </Entry>
+
+                <Label
+                    Text="Password:">
+                </Label>
+                <Entry
+                    IsPassword="True"
+                    Placeholder="Password"
+                    Text="{Binding Password}">
+                </Entry>
+
+                <Button 
+                    Text="Login"
+                    Command="{Binding LoginCommand}">
+                </Button>
+
+
+            </StackLayout>
+        </ScrollView>
+        
+        
+    </ContentPage.Content>
+    
+</ContentPage>

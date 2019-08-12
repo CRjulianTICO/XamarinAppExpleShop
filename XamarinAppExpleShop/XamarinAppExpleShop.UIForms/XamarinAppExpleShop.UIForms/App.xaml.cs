@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XamarinAppExpleShop.UIForms.Views;
 
 namespace XamarinAppExpleShop.UIForms
 {
@@ -10,7 +11,7 @@ namespace XamarinAppExpleShop.UIForms
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new  NavigationPage( new LoginPage());
         }
 
         protected override void OnStart()
