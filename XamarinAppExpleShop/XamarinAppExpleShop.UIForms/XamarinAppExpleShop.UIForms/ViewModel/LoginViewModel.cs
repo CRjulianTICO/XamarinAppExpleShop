@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
+using XamarinAppExpleShop.UIForms.Views;
 
 namespace XamarinAppExpleShop.UIForms.ViewModel
 {
@@ -44,8 +45,12 @@ namespace XamarinAppExpleShop.UIForms.ViewModel
                 return;
             }
 
-            await Application.Current.MainPage.
-                    DisplayAlert("Ok", "Imgereso", "Accept");
+            //await Application.Current.MainPage.
+            // DisplayAlert("Ok", "Imgereso", "Accept");
+
+            MainViewModel.GetInstance().Products = new ProductsViewModel();
+
+            await Application.Current.MainPage.Navigation.PushAsync(new ProductsPage());
             
         }
     }
