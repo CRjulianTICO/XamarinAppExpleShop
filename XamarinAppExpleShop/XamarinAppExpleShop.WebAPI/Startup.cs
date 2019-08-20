@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using XamarinAppExpleShop.Web.Data;
 using XamarinAppExpleShop.Web.Data.Entities;
 using XamarinAppExpleShop.Web.Helpers;
@@ -45,6 +47,24 @@ namespace XamarinAppExpleShop.WebAPI
 
 
 
+            #region Tokens
+            //Token
+
+            services.AddAuthentication()
+            .AddCookie()
+            .AddJwtBearer(cfg =>
+            {
+                cfg.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = this.Configuration["Tokens:Issuer"],
+                    ValidAudience = this.Configuration["Tokens:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.Configuration["Tokens:Key"]))
+                };
+            });
+
+
+            #endregion
+
 
 
             services.AddDbContext<Web.Data.DataContext>(cfg =>
@@ -56,8 +76,8 @@ namespace XamarinAppExpleShop.WebAPI
 
 
 
-
-
+            
+            //trasient es para los que solo se ejecutan una vez
             /*se agreggo*/
             services.AddTransient<SeedDb>();
 
@@ -65,7 +85,7 @@ namespace XamarinAppExpleShop.WebAPI
 
 
 
-
+            #region Scopeds
             /*se agreggo*/
             services.AddScoped<IProductRepository, ProductRepository>();
 
@@ -81,7 +101,7 @@ namespace XamarinAppExpleShop.WebAPI
 
             /*se agreggo*/
             services.AddScoped<IUserHelper, UserHelper>();
-
+            #endregion
 
 
 
