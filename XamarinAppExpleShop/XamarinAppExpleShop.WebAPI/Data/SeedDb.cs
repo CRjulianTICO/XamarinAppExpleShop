@@ -24,20 +24,31 @@ namespace XamarinAppExpleShop.Web.Data
             this.userHelper = userHelper;
         }
 
+
+
+
         public async Task SeedAsync()
         {
+
+
             await this.context.Database.EnsureCreatedAsync();
 
 
-            var user = await this.userHelper.GetUserByEmailAsync("jzuluaga55@gmail.com");
+            await this.userHelper.CheckRoleAsync("Admin");
+            await this.userHelper.CheckRoleAsync("Customer");
+
+
+
+
+            var user = await this.userHelper.GetUserByEmailAsync("juan@gmail.com");
             if (user == null)
             {
                 user = new User
                 {
                     FirstName = "Juan",
                     LastName = "Zuluaga",
-                    Email = "jzuluaga55@gmail.com",
-                    UserName = "jzuluaga55@gmail.com",
+                    Email = "juan@gmail.com",
+                    UserName = "juan@gmail.com",
                     PhoneNumber = "35025652981"
                 };
 
@@ -45,9 +56,54 @@ namespace XamarinAppExpleShop.Web.Data
 
                 if (result != IdentityResult.Success)
                 {
-                    throw new InvalidOperationException("Could not create the user in seeder");
+                    throw new InvalidOperationException("Could not create the user in seeder 1");
                 }
+
+                await this.userHelper.AddUserToRoleAsync(user,"Admin");
+
             }
+
+
+
+            var user2 = await this.userHelper.GetUserByEmailAsync("pedro@gmail.com");
+            if (user2 == null)
+            {
+                user2 = new User
+                {
+                    FirstName = "Pedro",
+                    LastName = "Martinez",
+                    Email = "pedro@gmail.com",
+                    UserName = "pedro@gmail.com",
+                    PhoneNumber = "7452652981"
+                };
+
+                var result2 = await this.userHelper.AddUserAsync(user2, "123456");
+
+                if (result2 != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("Could not create the user in seeder 2");
+                }
+
+                await this.userHelper.AddUserToRoleAsync(user2, "Customer");
+
+            }
+
+
+
+
+            var isInRole = await this.userHelper.IsUserInRoleAsync(user, "Admin");
+            if (!isInRole)
+            {
+                await this.userHelper.AddUserToRoleAsync(user, "Admin");
+            }
+
+            var isInRole2 = await this.userHelper.IsUserInRoleAsync(user2, "Customer");
+            if (!isInRole2)
+            {
+                await this.userHelper.AddUserToRoleAsync(user2, "Customer");
+            }
+
+
 
 
 
@@ -60,6 +116,12 @@ namespace XamarinAppExpleShop.Web.Data
                 await this.context.SaveChangesAsync();
             }
         }
+
+
+
+
+
+
 
         private void AddProduct(string name, User user)
         {

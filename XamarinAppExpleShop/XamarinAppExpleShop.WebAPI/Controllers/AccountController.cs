@@ -276,6 +276,25 @@ namespace XamarinAppExpleShop.Web.Controllers
 
 
 
+
+
+
+
+        //No authorized
+
+        public IActionResult NotAuthorized()
+        {
+            return this.View();
+        }
+
+
+
+
+
+
+
+
+
     }
 
 }

@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using XamarinAppExpleShop.Web.Data;
 using XamarinAppExpleShop.Web.Data.Entities;
+using XamarinAppExpleShop.Web.Data.Repositories;
 using XamarinAppExpleShop.Web.Helpers;
 
 namespace XamarinAppExpleShop.WebAPI
@@ -101,6 +102,22 @@ namespace XamarinAppExpleShop.WebAPI
 
             /*se agreggo*/
             services.AddScoped<IUserHelper, UserHelper>();
+
+
+
+
+
+
+
+            services.AddScoped<IOrderRepository, OrderRepository>();
+
+
+
+
+
+
+
+
             #endregion
 
 
@@ -115,8 +132,41 @@ namespace XamarinAppExpleShop.WebAPI
             });
 
 
+
+
+
+            //para las paginas de error, para redireccionar
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/NotAuthorized";
+                options.AccessDeniedPath = "/Account/NotAuthorized";
+            });
+
+
+
+
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
+
+
+
+
+
+
+
         }
+
+
+
+
+
+
+
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -130,6 +180,10 @@ namespace XamarinAppExpleShop.WebAPI
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+
+
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -148,6 +202,9 @@ namespace XamarinAppExpleShop.WebAPI
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+
+
         }
     }
 }

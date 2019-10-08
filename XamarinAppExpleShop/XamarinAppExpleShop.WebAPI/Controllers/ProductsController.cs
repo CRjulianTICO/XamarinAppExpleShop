@@ -14,7 +14,7 @@ namespace XamarinAppExpleShop.Web.Controllers
     using Microsoft.EntityFrameworkCore;
     using XamarinAppExpleShop.Web.Models;
 
-    [Authorize]
+    
     public class ProductsController : Controller
     {
         private readonly IProductRepository productRepository;
@@ -27,35 +27,47 @@ namespace XamarinAppExpleShop.Web.Controllers
             this.userHelper = userHelper;
         }
 
+
+
         // GET: Products
         public IActionResult Index()
         {
             return View(this.productRepository.GetAll().OrderBy(p=>p.Name));
         }
 
+
+
+
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("ProductNotFound");
             }
 
             var product = await this.productRepository.GetByIdAsync(id.Value);
             if (product == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("ProductNotFound");
             }
 
             return View(product);
         }
 
+
+
+        [Authorize(Roles = "Admin")]
         // GET: Products/Create
         public IActionResult Create()
         {
             return View();
         }
 
+
+
+
+     
         // POST: Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -64,6 +76,7 @@ namespace XamarinAppExpleShop.Web.Controllers
             if (ModelState.IsValid)
             {
 
+                
                 var path = string.Empty;
 
                 if (view.ImageFile != null && view.ImageFile.Length > 0)
@@ -91,7 +104,18 @@ namespace XamarinAppExpleShop.Web.Controllers
                 var product = this.ToProduct(view, path);
                 // TODO: Pending to change to: this.User.Identity.Name
                 product.User = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
-                await this.productRepository.CreateAsync(product);
+
+                try
+                {
+                    await this.productRepository.CreateAsync(product);
+                }
+                catch (Exception ex)
+                {
+
+                    return new GeneralErrorViewResult("GeneralError", ex.ToString());
+                }
+                
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -116,6 +140,12 @@ namespace XamarinAppExpleShop.Web.Controllers
             };
         }
 
+
+
+
+
+
+        [Authorize(Roles = "Admin")]
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -152,6 +182,11 @@ namespace XamarinAppExpleShop.Web.Controllers
             };
         }
 
+
+
+
+
+        
         // POST: Products/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -206,6 +241,13 @@ namespace XamarinAppExpleShop.Web.Controllers
             return View(view);
         }
 
+
+
+
+
+
+
+        [Authorize(Roles = "Admin")]
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -223,6 +265,13 @@ namespace XamarinAppExpleShop.Web.Controllers
             return View(product);
         }
 
+
+
+
+
+
+
+        
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -232,6 +281,24 @@ namespace XamarinAppExpleShop.Web.Controllers
             await this.productRepository.DeleteAsync(product);
             return RedirectToAction(nameof(Index));
         }
+
+
+
+
+
+
+
+        public IActionResult ProductNotFound()
+        {
+            return this.View();
+        }
+
+
+
+
+
+
+
     }
 
 }

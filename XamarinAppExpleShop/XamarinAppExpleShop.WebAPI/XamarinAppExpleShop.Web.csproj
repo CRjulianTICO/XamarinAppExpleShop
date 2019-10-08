@@ -18,4 +18,10 @@
     <Folder Include="wwwroot\images\Products\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Products\GeneralError.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
 </Project>

@@ -13,11 +13,21 @@ namespace XamarinAppExpleShop.Web.Data
     public class DataContext : IdentityDbContext<User>
     {
 
-
+        //se crea en la base de datos, las colecciones (talvez habla de tablas)
 
         public DbSet<Product> Products { get; set; }
 
         public DbSet<Country> Countries { get; set; }
+
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+
+        public DbSet<OrderDetailTemp> OrderDetailTemps { get; set; }
+
+
+
 
         public DataContext( DbContextOptions<DataContext> options)
             : base(options)
